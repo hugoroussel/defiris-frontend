@@ -1,23 +1,31 @@
-import logo from './logo.svg';
+/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable import/extensions */
+/* eslint-disable react/jsx-filename-extension */
+import React from 'react';
 import './App.css';
+
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from 'react-router-dom';
+import { createBrowserHistory } from 'history';
+
+import Home from './Home.js';
+import Dashboard from './Dashboard.js';
+
+const hist = createBrowserHistory();
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Router history={hist}>
+        <Switch>
+          <Route exact path="/dashboard" component={Dashboard} />
+          <Route exact path="/" component={Home} />
+          <Route to="*" component={Home} />
+        </Switch>
+      </Router>
     </div>
   );
 }
