@@ -5,6 +5,7 @@
 /* eslint-disable react/jsx-no-comment-textnodes */
 /* eslint-disable react/jsx-filename-extension */
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function Box(props) {
   return (
@@ -14,19 +15,19 @@ function Box(props) {
 
         <div className="column is-1">
           <figure className="image is-64x64">
-            <img src="https://cryptologos.cc/logos/aave-aave-logo.png" alt="Wassa" />
+            <img src={props.protocolImage} alt="Wassa" />
           </figure>
         </div>
 
         <div className="column is-1">
           <figure className="image is-64x64">
-            <img src="https://cryptologos.cc/logos/usd-coin-usdc-logo.png?v=010" alt="Wassa" />
+            <img src={props.coin1Image} alt="Wassa" />
           </figure>
         </div>
 
         <div className="column is-1">
           <figure className="image is-64x64">
-            <img src="https://cryptologos.cc/logos/multi-collateral-dai-dai-logo.png" alt="Wassa" />
+            <img src={props.coin2Image} alt="Wassa" />
           </figure>
         </div>
         <center>
@@ -43,7 +44,7 @@ function Box(props) {
 
         </center>
         <div className="column">
-          <button className="button is-success is-large">Access Pool</button>
+          <Link to="/pool" className="button is-success is-large">Access Pool</Link>
         </div>
       </div>
     </div>

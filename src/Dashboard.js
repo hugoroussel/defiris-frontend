@@ -8,6 +8,10 @@ import PoolBox from './Components/PoolBox/PoolBox';
 
 function Dashboard() {
   const DAI_IMAGE = 'https://cryptologos.cc/logos/multi-collateral-dai-dai-logo.png';
+  const USDC_IMAGE = 'https://cryptologos.cc/logos/usd-coin-usdc-logo.png?v=010';
+  const AAVE_IMAGE = 'https://cryptologos.cc/logos/aave-aave-logo.png';
+  const COMPOUND_IMAGE = 'https://cryptologos.cc/logos/compound-comp-logo.png';
+  const TETHER_IMAGE = 'https://cryptologos.cc/logos/tether-usdt-logo.png';
 
   return (
     <div className="Defiris">
@@ -17,12 +21,14 @@ function Dashboard() {
       </section>
       <div className="container">
 
-        <PoolBox coin1="usdc" coin2="dai" protocol="Aave" />
-        <PoolBox coin1="usdc" coin2="dai" protocol="Aave" />
-        <PoolBox coin1="usdc" coin2="dai" protocol="Aave" />
-        <PoolBox coin1="usdc" coin2="dai" protocol="Aave" />
-        <PoolBox coin1="usdc" coin2="dai" protocol="Aave" />
-        <PoolBox coin1="usdc" coin2="dai" protocol="Aave" />
+        <h1 className="title">Aave Pools</h1>
+        <PoolBox coin1Image={USDC_IMAGE} coin2Image={DAI_IMAGE} protocolImage={AAVE_IMAGE} coin1="usdc" coin2="dai" protocol="Aave" />
+        <PoolBox coin1Image={USDC_IMAGE} coin2Image={TETHER_IMAGE} protocolImage={AAVE_IMAGE} coin1="usdc" coin2="dai" protocol="Aave" />
+        <PoolBox coin1Image={DAI_IMAGE} coin2Image={TETHER_IMAGE} protocolImage={AAVE_IMAGE} coin1="usdc" coin2="dai" protocol="Aave" />
+        <h1 className="title">Compound Pools</h1>
+        <PoolBox coin1Image={USDC_IMAGE} coin2Image={DAI_IMAGE} protocolImage={COMPOUND_IMAGE} coin1="usdc" coin2="dai" protocol="Aave" />
+        <PoolBox coin1Image={USDC_IMAGE} coin2Image={DAI_IMAGE} protocolImage={COMPOUND_IMAGE} coin1="usdc" coin2="dai" protocol="Aave" />
+        <PoolBox coin1Image={USDC_IMAGE} coin2Image={DAI_IMAGE} protocolImage={COMPOUND_IMAGE} coin1="usdc" coin2="dai" protocol="Aave" />
 
       </div>
 

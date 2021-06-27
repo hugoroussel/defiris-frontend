@@ -13,6 +13,7 @@ import { createBrowserHistory } from 'history';
 
 import Home from './Home.js';
 import Dashboard from './Dashboard.js';
+import Pool from './Pool.js';
 
 const hist = createBrowserHistory();
 
@@ -22,6 +23,7 @@ function App() {
       <Router history={hist}>
         <Switch>
           <Route exact path="/dashboard" component={Dashboard} />
+          <Route exact path="/pool" component={Pool} />
           <Route exact path="/" component={Home} />
           <Route to="*" component={Home} />
         </Switch>
