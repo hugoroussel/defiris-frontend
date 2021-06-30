@@ -85,7 +85,7 @@ function Pool() {
 
   async function depositUsdc() {
     const dc = await getDefirisContract();
-    const res = await dc.populateTransaction.depositFixed(1000000000);
+    const res = await dc.populateTransaction.depositVariable(1000000000);
     res.from = await getAccount();
     res.gasLimit = 1000000;
     const txHash = await window.ethereum.request({
@@ -96,9 +96,19 @@ function Pool() {
 
   async function depositDai() {
     const dc = await getDefirisContract();
-    const res = await dc.populateTransaction.depositVariable(1000000000);
+    const res = await dc.populateTransaction.depositFixed(1000000000);
     res.from = await getAccount();
     res.gasLimit = 1000000;
+    const txHash = await window.ethereum.request({
+      method: 'eth_sendTransaction',
+      params: [res],
+    });
+  }
+
+  async function withdraw() {
+    const dc = await getDefirisContract();
+    const res = await dc.populateTransaction.withdraw();
+    res.from = await getAccount();
     const txHash = await window.ethereum.request({
       method: 'eth_sendTransaction',
       params: [res],
@@ -206,7 +216,7 @@ function Pool() {
                     <button className="button is-small is-black" onClick={() => depositDai()}>Deposit</button>
                   </div>
                   <div className="column">
-                    <button className="button is-small is-black">Withdraw</button>
+                    <button className="button is-small is-black" onClick={() => withdraw()}>Withdraw</button>
                   </div>
                 </div>
               </div>
@@ -229,7 +239,7 @@ function Pool() {
                     <button className="button is-small is-black" onClick={() => depositUsdc()}>Deposit</button>
                   </div>
                   <div className="column">
-                    <button className="button is-small is-black">Withdraw</button>
+                    <button className="button is-small is-black" onClick={() => withdraw()}>Withdraw</button>
                   </div>
                 </div>
               </div>
