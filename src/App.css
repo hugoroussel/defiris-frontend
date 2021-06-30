@@ -11,6 +11,15 @@
   size: 24em;
 }
 
+.pool {
+  flex-grow: 1;
+}
+
+.coins{
+  align-content: center;
+  align-items: center;
+}
+
 .el:hover {
   border: solid 2px grey;  
 }

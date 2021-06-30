@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable react/button-has-type */
 /* eslint-disable jsx-a11y/heading-has-content */
@@ -6,357 +7,119 @@
 import './App.css';
 import React, { useEffect, useState } from 'react';
 import { ethers } from 'ethers';
+import erc20 from './abi/erc20';
+import defiris from './abi/defiris';
 
 function hexToInt(hexstring) {
   return parseInt(hexstring, 16);
 }
 
+const DAI_IMAGE = 'https://cryptologos.cc/logos/multi-collateral-dai-dai-logo.png';
+const USDC_IMAGE = 'https://cryptologos.cc/logos/usd-coin-usdc-logo.png?v=010';
+const AAVE_IMAGE = 'https://cryptologos.cc/logos/aave-aave-logo.png';
+const COMPOUND_IMAGE = 'https://cryptologos.cc/logos/compound-comp-logo.png';
+const TETHER_IMAGE = 'https://cryptologos.cc/logos/tether-usdt-logo.png';
+const MPH_IMAGE = 'https://88mph.app/docs/img/88mph-logo-dark.png';
+
+const DAI = '0x5FbDB2315678afecb367f032d93F642f64180aa3';
+const USDC = '0x1613beB3B2C4f22Ee086B2b38C1476A3cE7f78E8';
+const DEFIRIS = '0x998abeb3E57409262aE5b751f60747921B33613E';
+
 function Pool() {
   const [address, setAddress] = useState('');
-
-  const ABI = `[
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": true,
-          "internalType": "address",
-          "name": "owner",
-          "type": "address"
-        },
-        {
-          "indexed": true,
-          "internalType": "address",
-          "name": "spender",
-          "type": "address"
-        },
-        {
-          "indexed": false,
-          "internalType": "uint256",
-          "name": "value",
-          "type": "uint256"
-        }
-      ],
-      "name": "Approval",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": true,
-          "internalType": "address",
-          "name": "from",
-          "type": "address"
-        },
-        {
-          "indexed": true,
-          "internalType": "address",
-          "name": "to",
-          "type": "address"
-        },
-        {
-          "indexed": false,
-          "internalType": "uint256",
-          "name": "value",
-          "type": "uint256"
-        }
-      ],
-      "name": "Transfer",
-      "type": "event"
-    },
-    {
-      "constant": true,
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "owner",
-          "type": "address"
-        },
-        {
-          "internalType": "address",
-          "name": "spender",
-          "type": "address"
-        }
-      ],
-      "name": "allowance",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "constant": false,
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "spender",
-          "type": "address"
-        },
-        {
-          "internalType": "uint256",
-          "name": "amount",
-          "type": "uint256"
-        }
-      ],
-      "name": "approve",
-      "outputs": [
-        {
-          "internalType": "bool",
-          "name": "",
-          "type": "bool"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "constant": true,
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "account",
-          "type": "address"
-        }
-      ],
-      "name": "balanceOf",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "constant": true,
-      "inputs": [],
-      "name": "decimals",
-      "outputs": [
-        {
-          "internalType": "uint8",
-          "name": "",
-          "type": "uint8"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "constant": false,
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "spender",
-          "type": "address"
-        },
-        {
-          "internalType": "uint256",
-          "name": "subtractedValue",
-          "type": "uint256"
-        }
-      ],
-      "name": "decreaseAllowance",
-      "outputs": [
-        {
-          "internalType": "bool",
-          "name": "",
-          "type": "bool"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "constant": false,
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "spender",
-          "type": "address"
-        },
-        {
-          "internalType": "uint256",
-          "name": "addedValue",
-          "type": "uint256"
-        }
-      ],
-      "name": "increaseAllowance",
-      "outputs": [
-        {
-          "internalType": "bool",
-          "name": "",
-          "type": "bool"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "constant": false,
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "to",
-          "type": "address"
-        },
-        {
-          "internalType": "uint256",
-          "name": "amount",
-          "type": "uint256"
-        }
-      ],
-      "name": "mint",
-      "outputs": [],
-      "payable": false,
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "constant": true,
-      "inputs": [],
-      "name": "name",
-      "outputs": [
-        {
-          "internalType": "string",
-          "name": "",
-          "type": "string"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "constant": true,
-      "inputs": [],
-      "name": "symbol",
-      "outputs": [
-        {
-          "internalType": "string",
-          "name": "",
-          "type": "string"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "constant": true,
-      "inputs": [],
-      "name": "totalSupply",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "constant": false,
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "recipient",
-          "type": "address"
-        },
-        {
-          "internalType": "uint256",
-          "name": "amount",
-          "type": "uint256"
-        }
-      ],
-      "name": "transfer",
-      "outputs": [
-        {
-          "internalType": "bool",
-          "name": "",
-          "type": "bool"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "constant": false,
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "sender",
-          "type": "address"
-        },
-        {
-          "internalType": "address",
-          "name": "recipient",
-          "type": "address"
-        },
-        {
-          "internalType": "uint256",
-          "name": "amount",
-          "type": "uint256"
-        }
-      ],
-      "name": "transferFrom",
-      "outputs": [
-        {
-          "internalType": "bool",
-          "name": "",
-          "type": "bool"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "nonpayable",
-      "type": "function"
-    }
-  ]`;
+  const [tokens, setTokens] = useState('');
+  const [daiBalance, setDaiBalance] = useState(0);
+  const [usdcBalance, setUsdcBalance] = useState(0);
 
   async function getAccount() {
     const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
     const account = accounts[0];
-    console.log('metamask provider', window.ethereum);
     setAddress(account);
+    return account;
   }
 
-  async function onClick() {
-    const url = 'http://localhost:8545';
+  async function getDefirisContract() {
+    const provider = new ethers.providers.JsonRpcProvider('http://localhost:8545');
+    // const signer = await provider.getSigner();
+    const defirisContract = new ethers.Contract(DEFIRIS, defiris, provider);
+    return defirisContract;
+  }
 
-    // Or if you are running the UI version, use this instead:
-    // const url = "http://localhost:7545"
+  async function getDaiContract() {
+    const provider = new ethers.providers.JsonRpcProvider('http://localhost:8545');
+    // const signer = await provider.getSigner();
+    const daiContract = new ethers.Contract(DAI, erc20, provider);
+    return daiContract;
+  }
 
-    const provider = new ethers.providers.JsonRpcProvider(url);
-    const signer = ethers.Wallet.createRandom().connect(provider);
-    const ERC20 = new ethers.Contract('0x5fbdb2315678afecb367f032d93f642f64180aa3', ABI, signer);
-    try {
-      const bo = await ERC20.totalSupply();
-      console.log('Total supply', hexToInt(bo._hex));
-    } catch (e) {
-      console.log('error calling', e);
-    }
+  async function getUsdcContract() {
+    const provider = new ethers.providers.JsonRpcProvider('http://localhost:8545');
+    // const signer = await provider.getSigner();
+    const usdcContract = new ethers.Contract(USDC, erc20, provider);
+    return usdcContract;
+  }
+
+  async function approveUsdc() {
+    const uc = await getUsdcContract();
+    const res = await uc.populateTransaction.approve(DEFIRIS, 1000000000);
+    res.from = await getAccount();
+    res.chainId = 31337;
+    console.log(res);
+    const txHash = await window.ethereum.request({
+      method: 'eth_sendTransaction',
+      params: [res],
+    });
+  }
+
+  async function approveDai() {
+    const dc = await getDaiContract();
+    const res = await dc.populateTransaction.approve(DEFIRIS, 1000000000);
+    res.from = await getAccount();
+    res.chainId = 31337;
+    console.log(res);
+    const txHash = await window.ethereum.request({
+      method: 'eth_sendTransaction',
+      params: [res],
+    });
+  }
+
+  async function depositUsdc() {
+    const dc = await getDefirisContract();
+    const res = await dc.populateTransaction.depositFixed(1000000000);
+    res.from = await getAccount();
+    res.gasLimit = 1000000;
+    const txHash = await window.ethereum.request({
+      method: 'eth_sendTransaction',
+      params: [res],
+    });
+  }
+
+  async function depositDai() {
+    const dc = await getDefirisContract();
+    const res = await dc.populateTransaction.depositVariable(1000000000);
+    res.from = await getAccount();
+    res.gasLimit = 1000000;
+    const txHash = await window.ethereum.request({
+      method: 'eth_sendTransaction',
+      params: [res],
+    });
+  }
+
+  async function setStableCoinsBalances() {
+    const daiContract = await getDaiContract();
+    const ca = await getAccount();
+    const balance = await daiContract.balanceOf(ca);
+    setDaiBalance(hexToInt(balance._hex));
+    const usdcContract = await getUsdcContract();
+    const balanceUSDC = await usdcContract.balanceOf(ca);
+    setUsdcBalance(hexToInt(balanceUSDC._hex));
   }
 
   useEffect(() => {
     if (typeof window.ethereum !== 'undefined') {
       // alert('MetaMask is installed!');
       getAccount();
+      setStableCoinsBalances();
     } else {
       alert('Please use Metamask to use this application');
     }
@@ -368,19 +131,114 @@ function Pool() {
       <section className="section is-small">
         <h1 className="title">Defiris</h1>
       </section>
-      <div className="container">
-
-        <h1 className="title">Aave Pools</h1>
-        <h1 className="title">
+      <div className="container is-fullheight">
+        <h1 className="title is-12">
           Your address:
           {' '}
           {address}
         </h1>
+
+        <div className="pool columns">
+          <div className="column" />
+
+          <div className="column">
+
+            <div className="box">
+              <h1 className="title is-12">
+                Your coins:
+              </h1>
+              <div className="section is-small">
+                <div className="coins columns">
+                  <div className="column">
+                    <figure className="image is-48x48">
+                      <img src={DAI_IMAGE} alt="dai" />
+                    </figure>
+                  </div>
+                  <div className="column"><strong>DAI</strong></div>
+                  <div className="column">
+                    {' '}
+                    {daiBalance / 1e6}
+                    {' '}
+                  </div>
+                </div>
+              </div>
+
+              <div className="section is-small">
+                <div className="coins columns">
+                  <div className="column">
+                    <figure className="image is-48x48">
+                      <img src={USDC_IMAGE} alt="dai" />
+                    </figure>
+                  </div>
+                  <div className="column"><strong>USDC</strong></div>
+                  <div className="column">
+                    {' '}
+                    {usdcBalance / 1e6}
+                    {' '}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div className="column">
+
+            <div className="box">
+              <h1 className="title is-7">
+                Pools
+              </h1>
+              <div className="section is-small">
+                <div className="coins columns">
+                  <div className="column">
+                    <figure className="image is-48x48">
+                      <img src={MPH_IMAGE} alt="88mph logo" />
+                    </figure>
+                  </div>
+                  <div className="column"><strong>DAI via Aave</strong></div>
+                  <div className="column">
+                    APY 5.9% (fixed)
+                  </div>
+                  <div className="column">
+                    <button className="button is-small is-black" onClick={() => approveDai()}>Approve</button>
+                  </div>
+                  <div className="column">
+                    <button className="button is-small is-black" onClick={() => depositDai()}>Deposit</button>
+                  </div>
+                  <div className="column">
+                    <button className="button is-small is-black">Withdraw</button>
+                  </div>
+                </div>
+              </div>
+
+              <div className="section is-small">
+                <div className="coins columns">
+                  <div className="column">
+                    <figure className="image is-48x48">
+                      <img src={COMPOUND_IMAGE} alt="dai" />
+                    </figure>
+                  </div>
+                  <div className="column"><strong>USDC</strong></div>
+                  <div className="column">
+                    APY 10% (variable)
+                  </div>
+                  <div className="column">
+                    <button className="button is-small is-black" onClick={() => approveUsdc()}>Approve</button>
+                  </div>
+                  <div className="column">
+                    <button className="button is-small is-black" onClick={() => depositUsdc()}>Deposit</button>
+                  </div>
+                  <div className="column">
+                    <button className="button is-small is-black">Withdraw</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="column" />
+        </div>
+
       </div>
-      <br />
-      <br />
-      <br />
-      <button onClick={onClick} className="button is-dark">Click here to deposit</button>
 
       <section className="section is-small">
         <p>

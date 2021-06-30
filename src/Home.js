@@ -5,7 +5,7 @@
 import './App.css';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import logo from './public/logo_transparent.png';
+import logo from './public/newlogo.png';
 
 function App() {
   return (
@@ -45,17 +45,13 @@ function App() {
 
               <div className="tile is-parent">
                 <article className="el tile is-child notification is-light">
-                  <br />
-                  <br />
                   <center>
-                    <p className="title">Defiris</p>
                     <p className="subtitle">Interest Rate Swaps Made Easy</p>
-                    <br />
-                    <Link to="/dashboard" className="button is-dark">Launch Application</Link>
-                    <br />
                     <figure className="image is-4by4">
                       <img alt="defiris logo" src={logo} />
                     </figure>
+                    <Link to="/dashboard" className="button is-dark">Launch Application</Link>
+                    <br />
                   </center>
                 </article>
               </div>

@@ -5,6 +5,7 @@
 import './App.css';
 import React from 'react';
 import PoolBox from './Components/PoolBox/PoolBox';
+import logo from './public/newlogo.png';
 
 function Dashboard() {
   const DAI_IMAGE = 'https://cryptologos.cc/logos/multi-collateral-dai-dai-logo.png';
@@ -17,7 +18,16 @@ function Dashboard() {
     <div className="Defiris">
 
       <section className="section is-small">
-        <h1 className="title">Defiris</h1>
+        <div className="columns">
+          <div className="column" />
+          <div className="column">
+            <figure className="image">
+              <img alt="defiris logo" src={logo} />
+            </figure>
+          </div>
+          <div className="column" />
+        </div>
+
       </section>
       <div className="container">
 
