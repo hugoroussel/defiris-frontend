@@ -9,6 +9,8 @@ import React, { useEffect, useState } from 'react';
 import { ethers } from 'ethers';
 import erc20 from './abi/erc20';
 import defiris from './abi/defiris';
+import logo from './public/logo.png';
+import Navbar from './Components/Navbar/Navbar';
 
 function hexToInt(hexstring) {
   return parseInt(hexstring, 16);
@@ -136,10 +138,24 @@ function Pool() {
   }, []);
 
   return (
-    <div className="Defiris">
 
-      <section className="section is-small">
-        <h1 className="title">Defiris</h1>
+    <div className="Defiris">
+      <Navbar />
+
+      <section className="container is-small">
+        <div className="columns">
+          <div className="column" />
+          <div className="column" />
+          <div className="column">
+            <figure className="image is-4by4">
+              <img alt="defiris logo" src={logo} />
+            </figure>
+
+          </div>
+          <div className="column" />
+          <div className="column" />
+        </div>
+
       </section>
       <div className="container is-fullheight">
         <h1 className="title is-12">
@@ -247,8 +263,11 @@ function Pool() {
           </div>
           <div className="column" />
         </div>
-
       </div>
+      <br />
+      <br />
+      <br />
+      <br />
 
       <section className="section is-small">
         <p>

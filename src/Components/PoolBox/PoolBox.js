@@ -10,26 +10,21 @@ import { Link } from 'react-router-dom';
 function Box(props) {
   return (
 
-    <div className="box">
-      <div className="columns">
+    <div className="poolbox box">
+      <div className="columns" style={{ alignItems: 'center' }}>
 
         <div className="column is-1">
           <figure className="image is-64x64">
-            <img src={props.protocolImage} alt="Wassa" />
+            <img src={props.protocolImage} alt="coin1" />
           </figure>
         </div>
 
         <div className="column is-1">
           <figure className="image is-64x64">
-            <img src={props.coin1Image} alt="Wassa" />
+            <img src={props.coin1Image} alt="coin2" />
           </figure>
         </div>
 
-        <div className="column is-1">
-          <figure className="image is-64x64">
-            <img src={props.coin2Image} alt="Wassa" />
-          </figure>
-        </div>
         <center>
           <div className="title column">
             Pool
@@ -44,7 +39,7 @@ function Box(props) {
 
         </center>
         <div className="column">
-          <Link to="/pool" className="button is-success is-large">Access Pool</Link>
+          <Link to="/pool" className="button is-black is-large">Access Pool</Link>
         </div>
       </div>
     </div>
