@@ -31,7 +31,7 @@ function App() {
                     <center>
                       <p className="title">📈📉</p>
                       <p className="title">Bet on Interest</p>
-                      <p className="subtitle">Short or long interests of different lending pools such as Aave, Compound</p>
+                      <p className="subtitle">Short or long interests of different lending pools such as Aave and Compound</p>
                     </center>
                   </article>
 
@@ -84,13 +84,21 @@ function App() {
                       {' '}
                       <strong>Aave and Compound</strong>
                     </p>
+                    <p className="subtitle">
+                      {' '}
+                      <strong>Aave</strong>
+                      {' '}
+                      versus
+                      {' '}
+                      <strong>Compound</strong>
+                    </p>
                   </center>
                 </article>
               </div>
             </div>
             <div className="tile is-parent">
               <article className="el tile is-child notification is-light">
-                <h1 className="dtitle">Protocols</h1>
+                <h1 className="dtitle">Made with</h1>
                 <div classNameName="content">
                   <br />
                   <br />
@@ -114,7 +122,7 @@ function App() {
                     </figure>
                     <br />
                     <br />
-
+                    <br />
                     <img src="https://uploads-ssl.webflow.com/60b6dce67afe97711b72705a/60b6dd492ca92029837cea9a_element-logo.svg" alt="element.fi" />
 
                   </center>

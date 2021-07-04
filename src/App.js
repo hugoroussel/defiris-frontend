@@ -14,6 +14,10 @@ import { createBrowserHistory } from 'history';
 import Home from './Home.js';
 import Dashboard from './Dashboard.js';
 import Pool from './Pool.js';
+import PoolAave from './Pages/PoolAave';
+import PoolCompound from './Pages/PoolCompound';
+import PoolAaveCompound from './Pages/PoolAaveCompound';
+import Create from './Pages/Create';
 
 const hist = createBrowserHistory();
 
@@ -24,6 +28,10 @@ function App() {
         <Switch>
           <Route exact path="/dashboard" component={Dashboard} />
           <Route exact path="/pool" component={Pool} />
+          <Route exact path="/aave" component={PoolAave} />
+          <Route exact path="/compound" component={PoolCompound} />
+          <Route exact path="/create" component={Create} />
+          <Route exact path="/axc" component={PoolAaveCompound} />
           <Route exact path="/" component={Home} />
           <Route to="*" component={Home} />
         </Switch>

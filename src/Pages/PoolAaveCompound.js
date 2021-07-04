@@ -5,14 +5,14 @@
 /* eslint-disable jsx-a11y/heading-has-content */
 /* eslint-disable react/jsx-no-comment-textnodes */
 /* eslint-disable react/jsx-filename-extension */
-import './App.css';
+import '../App.css';
 import React, { useEffect, useState } from 'react';
 import { ethers } from 'ethers';
 import { PieChart } from 'react-minimal-pie-chart';
-import erc20 from './abi/erc20';
-import defiris from './abi/defiris';
-import logo from './public/logo.png';
-import Navbar from './Components/Navbar/Navbar';
+import erc20 from '../abi/erc20';
+import defiris from '../abi/defiris';
+import logo from '../public/logo.png';
+import Navbar from '../Components/Navbar/Navbar';
 
 function hexToInt(hexstring) {
   return parseInt(hexstring, 16);
@@ -24,12 +24,15 @@ const AAVE_IMAGE = 'https://cryptologos.cc/logos/aave-aave-logo.png';
 const COMPOUND_IMAGE = 'https://cryptologos.cc/logos/compound-comp-logo.png';
 const TETHER_IMAGE = 'https://cryptologos.cc/logos/tether-usdt-logo.png';
 const MPH_IMAGE = 'https://88mph.app/docs/img/88mph-logo-dark.png';
+const BUSD_IMAGE = 'https://cryptologos.cc/logos/binance-usd-busd-logo.png';
+const GUSD_IMAGE = 'https://cryptologos.cc/logos/gemini-dollar-gusd-logo.png';
+const TUSD_IMAGE = 'https://cryptologos.cc/logos/trueusd-tusd-logo.png';
 
 const DAI = '0x5FbDB2315678afecb367f032d93F642f64180aa3';
 const USDC = '0x1613beB3B2C4f22Ee086B2b38C1476A3cE7f78E8';
 const DEFIRIS = '0x998abeb3E57409262aE5b751f60747921B33613E';
 
-function Pool() {
+function PoolAaveCompound() {
   const [address, setAddress] = useState('');
   const [tokens, setTokens] = useState('');
   const [daiBalance, setDaiBalance] = useState(0);
@@ -184,23 +187,24 @@ function Pool() {
       <div className="container is-fullheight">
 
         <div className="pool columns">
-          <div className="column" />
 
-          <div className="column is-two-thirds">
+          <div className="column is-half">
 
             <div className="box">
-              <h1 className="title is-12">
-                Pools
-              </h1>
+              <center>
+                <figure className="image is-128x128">
+                  <img src={AAVE_IMAGE} alt="88mph logo" />
+                </figure>
+              </center>
               <div className="section is-small">
                 <div className="coins columns">
                   <div className="column">
-                    <figure className="image is-128x128">
-                      <img src={MPH_IMAGE} alt="88mph logo" />
+                    <figure className="image is-64x64">
+                      <img src={DAI_IMAGE} alt="dai logo" />
                     </figure>
                   </div>
                   <div className="column">
-                    <h1 className="title is-12">Aave Dai : APY 5.9% (fixed)</h1>
+                    <h1 className="title is-8">Dai APY 2.33%</h1>
                   </div>
                   <div className="column">
                     <button className="button is-large is-black" onClick={() => openModal()}>Use pool</button>
@@ -210,11 +214,11 @@ function Pool() {
                     <div className="modal-background" />
                     <div className="modal-card">
                       <header className="modal-card-head">
-                        <p className="modal-card-title"><strong>88mph Strategy</strong></p>
+                        <p className="modal-card-title"><strong>Aave Strategy</strong></p>
                         <button className="delete" aria-label="close" onClick={() => closeModal()} />
                       </header>
                       <section className="modal-card-body">
-                        <h1 className="title is-9">Will deposit DAI into the 88mph contract with the Aave strategy</h1>
+                        <h1 className="title is-9">Will deposit DAI into Aave</h1>
                         <div className="columns" style={{ alignItems: 'center' }}>
                           <div className="column" />
                           <div className="column" />
@@ -248,54 +252,65 @@ function Pool() {
 
                 <div className="coins columns">
                   <div className="column">
-                    <figure className="image is-128x128">
-                      <img src={COMPOUND_IMAGE} alt="88mph logo" />
+                    <figure className="image is-64x64">
+                      <img src={GUSD_IMAGE} alt="gusd" />
                     </figure>
                   </div>
                   <div className="column">
-                    <h1 className="title is-12">Compound Usdc : APY 10% (variable)</h1>
+                    <h1 className="title is-12">Gusd APY 2.83%</h1>
                   </div>
                   <div className="column">
                     <button className="button is-large is-black" onClick={() => openModal1()}>Use pool</button>
                   </div>
+                </div>
+                <br />
+                <br />
+                <br />
 
-                  <div className={modal1}>
-                    <div className="modal-background" />
-                    <div className="modal-card">
-                      <header className="modal-card-head">
-                        <p className="modal-card-title"><strong>Compound Strategy</strong></p>
-                        <button className="delete" aria-label="close" onClick={() => closeModal1()} />
-                      </header>
-                      <section className="modal-card-body">
-                        <h1 className="title is-9">Will deposit Usdc into Compound</h1>
-                        <div className="columns" style={{ alignItems: 'center' }}>
-                          <div className="column" />
-                          <div className="column" />
-                          <div className="column"><h1 className="title is-9">{usdcBalance / 1e6}</h1></div>
-                          <div className="column">
-                            {' '}
-                            <figure className="image is-48x48">
-                              <img src={USDC_IMAGE} alt="usdc" />
-                            </figure>
-                          </div>
-                          <div className="column" />
-                          <div className="column" />
+                <div className="coins columns">
+                  <div className="column">
+                    <figure className="image is-64x64">
+                      <img src={USDC_IMAGE} alt="gusd" />
+                    </figure>
+                  </div>
+                  <div className="column">
+                    <h1 className="title is-12">Usdc APY 2.11%</h1>
+                  </div>
+                  <div className="column">
+                    <button className="button is-large is-black" onClick={() => openModal1()}>Use pool</button>
+                  </div>
+                </div>
+                <br />
+                <br />
+                <br />
 
-                        </div>
-                        <br />
-                        <br />
-
-                        <h1 className="title is-9">Currently deposited : 0</h1>
-                        <br />
-                        <br />
-
-                        <button className="button is-black is-large" onClick={() => approveUsdc()}>Approve</button>
-                        &nbsp;
-                        <button className="button is-black is-large" onClick={() => depositUsdc()}>Deposit</button>
-                        &nbsp;
-                        <button className="button is-black is-large" onClick={() => withdraw()}>Withdraw</button>
-                      </section>
-                    </div>
+                <div className="coins columns">
+                  <div className="column">
+                    <figure className="image is-64x64">
+                      <img src={TETHER_IMAGE} alt="gusd" />
+                    </figure>
+                  </div>
+                  <div className="column">
+                    <h1 className="title is-12">Usdt APY 3.01%</h1>
+                  </div>
+                  <div className="column">
+                    <button className="button is-large is-black" onClick={() => openModal1()}>Use pool</button>
+                  </div>
+                </div>
+                <br />
+                <br />
+                <br />
+                <div className="coins columns">
+                  <div className="column">
+                    <figure className="image is-64x64">
+                      <img src={BUSD_IMAGE} alt="gusd" />
+                    </figure>
+                  </div>
+                  <div className="column">
+                    <h1 className="title is-12">Usdt APY 2.39%</h1>
+                  </div>
+                  <div className="column">
+                    <button className="button is-large is-black" onClick={() => openModal1()}>Use pool</button>
                   </div>
                 </div>
 
@@ -303,7 +318,103 @@ function Pool() {
 
             </div>
           </div>
-          <div className="column" />
+
+          <div className="column is-half">
+
+            <div className="box">
+              <center>
+                <figure className="image is-128x128">
+                  <img src={COMPOUND_IMAGE} alt="88mph logo" />
+                </figure>
+              </center>
+              <div className="section is-small">
+                <div className="coins columns">
+                  <div className="column">
+                    <figure className="image is-64x64">
+                      <img src={DAI_IMAGE} alt="dai logo" />
+                    </figure>
+                  </div>
+                  <div className="column">
+                    <h1 className="title is-8">Dai APY 2.18%</h1>
+                  </div>
+                  <div className="column">
+                    <button className="button is-large is-black" onClick={() => openModal()}>Use pool</button>
+                  </div>
+
+                  <div className={modal}>
+                    <div className="modal-background" />
+                    <div className="modal-card">
+                      <header className="modal-card-head">
+                        <p className="modal-card-title"><strong>Compound Strategy</strong></p>
+                        <button className="delete" aria-label="close" onClick={() => closeModal()} />
+                      </header>
+                      <section className="modal-card-body">
+                        <h1 className="title is-9">Will deposit DAI into Compound</h1>
+                        <div className="columns" style={{ alignItems: 'center' }}>
+                          <div className="column" />
+                          <div className="column" />
+                          <div className="column"><h1 className="title is-9">{daiBalance / 1e6}</h1></div>
+                          <div className="column">
+                            {' '}
+                            <figure className="image is-48x48">
+                              <img src={DAI_IMAGE} alt="dai" />
+                            </figure>
+                          </div>
+                          <div className="column" />
+                          <div className="column" />
+
+                        </div>
+
+                        <br />
+                        <br />
+
+                        <button className="button is-black is-large" onClick={() => approveDai()}>Approve</button>
+            &nbsp;
+                        <button className="button is-black is-large" onClick={() => depositDai()}>Deposit</button>
+            &nbsp;
+                        <button className="button is-black is-large" onClick={() => withdraw()}>Withdraw</button>
+                      </section>
+                    </div>
+                  </div>
+                </div>
+                <br />
+                <br />
+                <br />
+
+                <div className="coins columns">
+                  <div className="column">
+                    <figure className="image is-64x64">
+                      <img src={TUSD_IMAGE} alt="gusd" />
+                    </figure>
+                  </div>
+                  <div className="column">
+                    <h1 className="title is-12">Tusd APY 2.50%</h1>
+                  </div>
+                  <div className="column">
+                    <button className="button is-large is-black" onClick={() => openModal1()}>Use pool</button>
+                  </div>
+                </div>
+                <br />
+                <br />
+                <br />
+
+                <div className="coins columns">
+                  <div className="column">
+                    <figure className="image is-64x64">
+                      <img src={USDC_IMAGE} alt="gusd" />
+                    </figure>
+                  </div>
+                  <div className="column">
+                    <h1 className="title is-12">Usdc APY 1.50%</h1>
+                  </div>
+                  <div className="column">
+                    <button className="button is-large is-black" onClick={() => openModal1()}>Use pool</button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
         </div>
       </div>
       <br />
@@ -327,4 +438,4 @@ function Pool() {
   );
 }
 
-export default Pool;
+export default PoolAaveCompound;
