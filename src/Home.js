@@ -98,6 +98,8 @@ function App() {
                   <center>
                     <br />
                     <br />
+                    <br />
+                    <br />
                     <figure className="image is-128x128">
                       <img src="https://88mph.app/docs/img/88mph-logo-dark.png" alt="88mph logo" />
                     </figure>

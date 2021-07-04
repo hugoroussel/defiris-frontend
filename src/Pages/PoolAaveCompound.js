@@ -52,113 +52,9 @@ function PoolAaveCompound() {
     setModal1('modal is-active');
   }
 
-  async function closeModal1() {
-    setModal1('modal');
-  }
-
-  async function getAccount() {
-    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-    const account = accounts[0];
-    setAddress(account);
-    return account;
-  }
-
-  async function getDaiContract() {
-    const provider = new ethers.providers.JsonRpcProvider('http://localhost:8545');
-    // const signer = await provider.getSigner();
-    const daiContract = new ethers.Contract(DAI, erc20, provider);
-    return daiContract;
-  }
-
-  async function getUsdcContract() {
-    const provider = new ethers.providers.JsonRpcProvider('http://localhost:8545');
-    // const signer = await provider.getSigner();
-    const usdcContract = new ethers.Contract(USDC, erc20, provider);
-    return usdcContract;
-  }
-
-  async function setStableCoinsBalances() {
-    const daiContract = await getDaiContract();
-    const ca = await getAccount();
-    const balance = await daiContract.balanceOf(ca);
-    setDaiBalance(hexToInt(balance._hex));
-    const usdcContract = await getUsdcContract();
-    const balanceUSDC = await usdcContract.balanceOf(ca);
-    setUsdcBalance(hexToInt(balanceUSDC._hex));
-  }
-
-  async function getDefirisContract() {
-    const provider = new ethers.providers.JsonRpcProvider('http://localhost:8545');
-    // const signer = await provider.getSigner();
-    const defirisContract = new ethers.Contract(DEFIRIS, defiris, provider);
-    return defirisContract;
-  }
-
-  async function approveUsdc() {
-    const uc = await getUsdcContract();
-    const res = await uc.populateTransaction.approve(DEFIRIS, 1000000000);
-    res.from = await getAccount();
-    res.chainId = 31337;
-    console.log(res);
-    const txHash = await window.ethereum.request({
-      method: 'eth_sendTransaction',
-      params: [res],
-    });
-    await setStableCoinsBalances();
-  }
-
-  async function approveDai() {
-    const dc = await getDaiContract();
-    const res = await dc.populateTransaction.approve(DEFIRIS, 1000000000);
-    res.from = await getAccount();
-    res.chainId = 31337;
-    console.log(res);
-    const txHash = await window.ethereum.request({
-      method: 'eth_sendTransaction',
-      params: [res],
-    });
-  }
-
-  async function depositUsdc() {
-    const dc = await getDefirisContract();
-    const res = await dc.populateTransaction.depositVariable(1000000000);
-    res.from = await getAccount();
-    res.gasLimit = 1000000;
-    const txHash = await window.ethereum.request({
-      method: 'eth_sendTransaction',
-      params: [res],
-    });
-    await setStableCoinsBalances();
-  }
-
-  async function depositDai() {
-    const dc = await getDefirisContract();
-    const res = await dc.populateTransaction.depositFixed(1000000000);
-    res.from = await getAccount();
-    res.gasLimit = 1000000;
-    const txHash = await window.ethereum.request({
-      method: 'eth_sendTransaction',
-      params: [res],
-    });
-    await setStableCoinsBalances();
-  }
-
-  async function withdraw() {
-    const dc = await getDefirisContract();
-    const res = await dc.populateTransaction.withdraw();
-    res.from = await getAccount();
-    const txHash = await window.ethereum.request({
-      method: 'eth_sendTransaction',
-      params: [res],
-    });
-    await setStableCoinsBalances();
-  }
-
   useEffect(() => {
     if (typeof window.ethereum !== 'undefined') {
       // alert('MetaMask is installed!');
-      getAccount();
-      setStableCoinsBalances();
     } else {
       // alert('Please use Metamask to use this application');
     }
@@ -193,7 +89,7 @@ function PoolAaveCompound() {
             <div className="box">
               <center>
                 <figure className="image is-128x128">
-                  <img src={AAVE_IMAGE} alt="88mph logo" />
+                  <img src={AAVE_IMAGE} alt="aave logo" />
                 </figure>
               </center>
               <div className="section is-small">
@@ -237,11 +133,11 @@ function PoolAaveCompound() {
                         <br />
                         <br />
 
-                        <button className="button is-black is-large" onClick={() => approveDai()}>Approve</button>
+                        <button className="button is-black is-large">Approve</button>
                         &nbsp;
-                        <button className="button is-black is-large" onClick={() => depositDai()}>Deposit</button>
+                        <button className="button is-black is-large">Deposit</button>
                         &nbsp;
-                        <button className="button is-black is-large" onClick={() => withdraw()}>Withdraw</button>
+                        <button className="button is-black is-large">Withdraw</button>
                       </section>
                     </div>
                   </div>
@@ -260,7 +156,7 @@ function PoolAaveCompound() {
                     <h1 className="title is-12">Gusd APY 2.83%</h1>
                   </div>
                   <div className="column">
-                    <button className="button is-large is-black" onClick={() => openModal1()}>Use pool</button>
+                    <button className="button is-large is-black">Use pool</button>
                   </div>
                 </div>
                 <br />
@@ -277,7 +173,7 @@ function PoolAaveCompound() {
                     <h1 className="title is-12">Usdc APY 2.11%</h1>
                   </div>
                   <div className="column">
-                    <button className="button is-large is-black" onClick={() => openModal1()}>Use pool</button>
+                    <button className="button is-large is-black">Use pool</button>
                   </div>
                 </div>
                 <br />
@@ -294,7 +190,7 @@ function PoolAaveCompound() {
                     <h1 className="title is-12">Usdt APY 3.01%</h1>
                   </div>
                   <div className="column">
-                    <button className="button is-large is-black" onClick={() => openModal1()}>Use pool</button>
+                    <button className="button is-large is-black">Use pool</button>
                   </div>
                 </div>
                 <br />
@@ -310,7 +206,7 @@ function PoolAaveCompound() {
                     <h1 className="title is-12">Usdt APY 2.39%</h1>
                   </div>
                   <div className="column">
-                    <button className="button is-large is-black" onClick={() => openModal1()}>Use pool</button>
+                    <button className="button is-large is-black">Use pool</button>
                   </div>
                 </div>
 
@@ -368,11 +264,11 @@ function PoolAaveCompound() {
                         <br />
                         <br />
 
-                        <button className="button is-black is-large" onClick={() => approveDai()}>Approve</button>
+                        <button className="button is-black is-large">Approve</button>
             &nbsp;
-                        <button className="button is-black is-large" onClick={() => depositDai()}>Deposit</button>
+                        <button className="button is-black is-large">Deposit</button>
             &nbsp;
-                        <button className="button is-black is-large" onClick={() => withdraw()}>Withdraw</button>
+                        <button className="button is-black is-large">Withdraw</button>
                       </section>
                     </div>
                   </div>
