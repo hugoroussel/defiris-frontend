@@ -49,15 +49,15 @@ function App() {
 
                 <div className="tile is-parent">
                   <article className="el tile is-child notification is-light">
+                    <br />
+                    <p className="title is-12"><strong>Interest Rate Swaps Made Easy</strong></p>
                     <center>
                       <figure className="image is 128x128">
                         <img alt="defiris logo" src={logo} />
                       </figure>
                       <Link to="/dashboard" className="button is-dark">Launch Application</Link>
+
                       <br />
-                      <br />
-                      <br />
-                      <p className="subtitle"><strong>Interest Rate Swaps Made Easy</strong></p>
                     </center>
                   </article>
                 </div>

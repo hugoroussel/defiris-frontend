@@ -37,16 +37,8 @@ function Pool() {
   const [modal, setModal] = useState('modal');
   const [modal1, setModal1] = useState('modal');
 
-  async function openModal() {
-    setModal('modal is-active');
-  }
-
   async function closeModal() {
     setModal('modal');
-  }
-
-  async function openModal1() {
-    setModal1('modal is-active');
   }
 
   async function closeModal1() {
@@ -82,6 +74,16 @@ function Pool() {
     const usdcContract = await getUsdcContract();
     const balanceUSDC = await usdcContract.balanceOf(ca);
     setUsdcBalance(hexToInt(balanceUSDC._hex));
+  }
+
+  async function openModal1() {
+    await setStableCoinsBalances();
+    setModal1('modal is-active');
+  }
+
+  async function openModal() {
+    await setStableCoinsBalances();
+    setModal('modal is-active');
   }
 
   async function getDefirisContract() {
@@ -218,7 +220,7 @@ function Pool() {
                         <div className="columns" style={{ alignItems: 'center' }}>
                           <div className="column" />
                           <div className="column" />
-                          <div className="column"><h1 className="title is-9">{daiBalance / 1e6}</h1></div>
+                          <div className="column"><h1 className="title is-9">{(daiBalance / 1e6)}</h1></div>
                           <div className="column">
                             {' '}
                             <figure className="image is-48x48">

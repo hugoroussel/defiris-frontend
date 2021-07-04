@@ -61,8 +61,8 @@ function Portefolio() {
   }
 
   async function setStableCoinsBalances() {
-    const daiContract = await getDaiContract();
     const ca = await getAccount();
+    const daiContract = await getDaiContract();
     const balance = await daiContract.balanceOf(ca);
     setDaiBalance(hexToInt(balance._hex));
     const usdcContract = await getUsdcContract();
@@ -73,7 +73,7 @@ function Portefolio() {
   useEffect(() => {
     if (typeof window.ethereum !== 'undefined') {
       // alert('MetaMask is installed!');
-      getAccount();
+      // getAccount();
       setStableCoinsBalances();
     } else {
       // alert('Please use Metamask to use this application');
@@ -98,7 +98,7 @@ function Portefolio() {
 
       <div className="columns">
         <div className="column" />
-        <div className="column is-two-fifths">
+        <div className="column is-one-fifth">
           <div className="box">
             <center>
               <div className="column">
@@ -116,7 +116,7 @@ function Portefolio() {
                   <img src={DAI_IMAGE} />
                 </figure>
               </div>
-              <div className="column">0</div>
+              <div className="column">{daiBalance / 1e6}</div>
             </div>
 
             <div className="columns" style={{ alignItems: 'center' }}>
@@ -125,7 +125,7 @@ function Portefolio() {
                   <img src={USDC_IMAGE} />
                 </figure>
               </div>
-              <div className="column">0</div>
+              <div className="column">{usdcBalance / 1e6}</div>
             </div>
 
             <div className="columns" style={{ alignItems: 'center' }}>
@@ -168,7 +168,8 @@ function Portefolio() {
         </div>
         <div className="column" />
       </div>
-
+      <br />
+      <br />
       <h1 className="title is-12">
         Your address:
         {' '}
