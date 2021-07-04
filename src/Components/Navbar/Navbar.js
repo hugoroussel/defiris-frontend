@@ -30,6 +30,9 @@ function Navbar() {
           <a className="navbar-item" href="/dashboard">
             App
           </a>
+          <a className="navbar-item" href="/portefolio">
+            Portefolio
+          </a>
         </div>
 
       </div>

@@ -18,6 +18,7 @@ import PoolAave from './Pages/PoolAave';
 import PoolCompound from './Pages/PoolCompound';
 import PoolAaveCompound from './Pages/PoolAaveCompound';
 import Create from './Pages/Create';
+import Portefolio from './Pages/Portefolio';
 
 const hist = createBrowserHistory();
 
@@ -31,6 +32,7 @@ function App() {
           <Route exact path="/aave" component={PoolAave} />
           <Route exact path="/compound" component={PoolCompound} />
           <Route exact path="/create" component={Create} />
+          <Route exact path="/portefolio" component={Portefolio} />
           <Route exact path="/axc" component={PoolAaveCompound} />
           <Route exact path="/" component={Home} />
           <Route to="*" component={Home} />
